@@ -19,6 +19,18 @@ dependencies {
 
 }
 
+
+
+tasks.withType(Test) {
+    systemProperties = System.getProperties()
+    systemProperties loadConf()
+    def appEndpoint = (systemProperties['app'] ? systemProperties[systemProperties['app']] : systemProperties['endpoint'])
+    systemProperties['endpoint'] = appEndpoint
+    systemProperties['file.encoding'] = 'UTF-8'
+    reports.html.enabled false
+    reports.junitXml.destination = "$buildDir/test-results/" + systemProperties['browser']
+}
+
 test {
     systemProperties = [
             'file.encoding': 'UTF-8',
@@ -28,12 +40,12 @@ test {
 
 }
 
-task initTest(type: Test) {
+task init(type: Test) {
     include '**/InitTest.class'
 }
 
-task allTests(type: Test) {
-    include '**/AllTests.class'
+task trial(type: Test) {
+    include '**/TrialTest.class'
 }
 
 def loadConf() {
