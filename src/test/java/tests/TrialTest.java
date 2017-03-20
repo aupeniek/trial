@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.Common;
 import pages.ResultsPage;
@@ -29,8 +30,8 @@ public class TrialTest extends TestWrapper {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        driver = new ChromeDriver(capabilities);
-        startMaximized = true;
+        driver = "chrome".equals(System.getProperty("selenide.browser")) ?
+                new ChromeDriver() : new FirefoxDriver();        startMaximized = true;
 
         timeout = BASE_TIMEOUT;
         System.out.println("-----Starting test on: " + BASE_URL);

@@ -29,7 +29,8 @@ public class InitTest extends TestWrapper{
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        driver = new ChromeDriver(capabilities);
+        driver = "chrome".equals(System.getProperty("selenide.browser")) ?
+                new ChromeDriver() : new FirefoxDriver();
 
         timeout = BASE_TIMEOUT;
         System.out.println("-----Starting test on: " + BASE_URL);
